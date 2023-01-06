@@ -1,0 +1,10 @@
+{{- range .Values.realms }}
+apiVersion: keycloak.org/v1alpha1
+kind: KeycloakRealm
+metadata:
+  name: {{ .name }}
+  labels:
+    {{- include "keycloak.labels" $. | nindent 4 }}
+spec: {{ toYaml .spec | nindent 2 }}
+
+{{- end -}}

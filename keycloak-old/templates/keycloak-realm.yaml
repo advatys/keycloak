@@ -1,0 +1,33 @@
+{{- if .Values.keycloakRealmEnabled }}
+{{- $values := .Values -}}
+{{- $release := .Release -}}
+  {{- range $realm := .Values.keycloakRealms }}
+
+apiVersion: keycloak.org/v1alpha1
+kind: KeycloakRealm
+metadata:
+  finalizers:
+  - realm.cleanup
+  name:  {{ $release.Name }}-{{ $realm.name}}-oauth
+  namespace: {{ $release.Namespace }}
+  labels:
+    app: sso
+
+spec:
+  instanceSelector:
+    matchLabels:
+      app: sso
+  realm:
+    displayName: "{{ $release.Namespace }} {{ $realm.name }}  Realm"
+    enabled: true
+    id: {{ $realm.name }}
+    realm: {{ $realm.name }}
+    {{- if $realm.additionalRealmSpec }}
+{{ toYaml $realm.additionalRealmSpec | indent 4 }}
+    {{- end }}
+    {{- if $realm.additionalSpec }}
+{{ toYaml $realm.additionalSpec | indent 2 }}
+    {{- end }}
+---
+  {{- end }}
+{{- end }}

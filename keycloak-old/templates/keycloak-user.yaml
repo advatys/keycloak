@@ -1,0 +1,18 @@
+{{- if .Values.keycloakRealmEnabled }}
+{{- $values := .Values -}}
+{{- $release := .Release -}}
+  {{- range $user := .Values.keycloakUsers }}
+apiVersion: keycloak.org/v1alpha1
+kind: KeycloakUser
+metadata:
+  finalizers:
+  - user.cleanup
+  labels:
+    app: sso
+  name: {{ $release.Name }}-{{ $user.name }}-user
+  namespace: {{ $release.Namespace }}
+spec:
+{{ toYaml $user.spec | indent 2 }}
+---
+  {{- end }}
+{{- end }}

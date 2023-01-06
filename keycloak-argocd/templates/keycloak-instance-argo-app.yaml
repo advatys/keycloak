@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "{{ .Release.Name }}-keycloak-instance"
+  namespace: {{ .Values.keycloakInstance.argocdConfig.argocdNamespace | default "argocd" }}
+spec:
+  destination:
+    namespace: {{ .Values.keycloakInstance.argocdConfig.targetNamespace | default "keycloak-operator" }}
+    server: {{ .Values.keycloakInstance.argocdConfig.targetCluster | default "https://kubernetes.default.svc" }}
+  project: {{ .Values.keycloakInstance.argocdConfig.project.name | default "default"}}
+  source:
+    repoURL: 'https://github.com/advatys/kubernetes-library.git'
+    targetRevision: oidc
+    path: oidcaas/keycloak
+    helm:
+      values: |
+        ---
+        keycloakInstall: true
+        keycloakRouteEnabled: true
+        keycloakRealmEnabled: false
+        keycloakClientEnabled: false
+        keycloakCABundleEnabled: false
+        OAuthPatchEnabled: false
+        keycloakHostname: {{ .Values.keycloakInstance.hostname }}
+        keycloak:
+          keycloakClusterSize: 1
+          additionalSpec: {}
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+

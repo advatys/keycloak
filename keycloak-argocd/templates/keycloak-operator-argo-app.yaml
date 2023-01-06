@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak-operator
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/advatys/kubernetes-library.git'
+    targetRevision: olm-helper-dev 
+    path: olm-helper
+    helm:
+      parameters:
+        - name: subscription.package 
+          value: 'keycloak-operator'
+        - name: subscription.channel
+          value: 'alpha'
+        - name: catalog.name
+          value: 'operatorhubio-catalog'
+        - name: catalog.createCatalog
+          value: 'true'
+      values: |
+        ---
+        operatorGroup:
+          create: true
+          spec:
+            targetNamespaces:
+            - keycloak-operator
+        catalog:
+          spec: 
+            displayName: Community Operators
+            image: quay.io/operator-framework/upstream-community-operators:latest
+            publisher: OperatorHub.io
+            sourceType: "grpc"          
+        subscription: 
+          spec:
+            config:
+              env:
+              - name: "RELATED_IMAGE_KEYCLOAK"
+                value: "quay.io/keycloak/keycloak:11.0.3"
+        
+
+ 
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: keycloak-operator 
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+

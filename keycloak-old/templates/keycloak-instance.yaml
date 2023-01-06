@@ -1,0 +1,14 @@
+{{- if .Values.keycloakInstall }}
+kind: Keycloak
+apiVersion: keycloak.org/v1alpha1
+metadata:
+  labels:
+    app: sso
+  name: {{ .Release.Name }}-oauth
+  namespace: {{ .Release.Namespace }}
+spec:
+  instances: {{ .Values.keycloakClusterSize | default 1 }}
+{{- if .Values.keycloak.additionalSpec }}
+{{ toYaml .Values.keycloak.additionalSpec | indent 2 }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,8 @@
+keycloakInstance:
+  hostname: "keycloak.apps.hub.gcp.aws-openshift.club" 
+  argocdConfig:
+    targetNamespace: keycloak-operator
+    targetCluster: "https://kubernetes.default.svc"
+    project: 
+      createProject: false 
+      name: default
