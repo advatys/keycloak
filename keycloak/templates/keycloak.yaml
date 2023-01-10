@@ -10,14 +10,14 @@ spec:
   {{- else }}
     vendor: postgres
     usernameSecret:
-      name: usernameSecret
-      key: usernameSecretKey
+      name: {{ .Release.Name }}-db-superuser
+      key: username
     passwordSecret:
-      name: passwordSecret
-      key: passwordSecretKey
-    host: host
-    database: database
-    port: 123
+      name: {{ .Release.Name }}-db-superuser
+      key: password
+    host: {{ .Release.Name }}-db-rw
+    database: keycloak
+    port: 5432
   {{- end }}
   http:
     tlsSecret: {{ .Release.Name }}-tls-internal
