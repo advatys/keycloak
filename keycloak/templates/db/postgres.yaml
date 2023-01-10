@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: keycloak-{{.Values.targetClusterName }}
+  name: db-{{ .Release.Name }}
 spec: {{ toYaml .Values.db.cnpg | nindent 2}}
 
 {{- end }}
