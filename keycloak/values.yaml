@@ -9,12 +9,6 @@ db:
   cnpg:
     # If externalDatabase.enabled is set to false, a postgres database will be created using the cloudnative-pg operator. For more detailed information about the available options, please refer to https://cloudnative-pg.io/documentation/1.18/api_reference/#cluster 
     instances: 2
-    bootstrap:
-      initdb:
-        database: keycloak
-        owner: keycloak
-        secret:
-          name: keycloak-db-secret
     storage:
       size: 1Gi
     imageName: ghcr.io/cloudnative-pg/postgresql:14.6-8

@@ -3,6 +3,11 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: {{ .Release.Name }}-db
-spec: {{ toYaml .Values.db.cnpg | nindent 2}}
+spec: 
+  bootstrap:
+    initdb:
+      database: keycloak
+      owner: keycloak
+{{ toYaml .Values.db.cnpg | nindent 2}}
 
 {{- end }}
