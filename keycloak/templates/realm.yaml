@@ -8,7 +8,7 @@ metadata:
 spec: 
   instanceSelector:
     matchLabels:
-      app: {{ .Release.Name }}-sso
+      app: {{ $.Release.Name }}-sso
 {{ toYaml .spec | nindent 2 }}
 
 {{- end }}
