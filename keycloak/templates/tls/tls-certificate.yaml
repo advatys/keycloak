@@ -33,6 +33,6 @@ spec:
     - {{ $.Release.Name }}-{{$i}}.{{ $.Release.Namespace }}.svc.cluster.local
 {{end}}
   issuerRef:
-    name: {{ .Values.tls.certificate.issuer.name | default selfsigning }}
+    name: {{ .Values.tls.certificate.issuer.name | default "selfsigning" }}
     kind: {{ .Values.tls.certificate.issuer.kind }}
     group: cert-manager.io
