@@ -13,8 +13,6 @@ db:
       initdb:
         database: keycloak
         owner: keycloak
-        secret:
-          name: keycloak-db-secret
     storage:
       size: 1Gi
     imageName: ghcr.io/cloudnative-pg/postgresql:14.6-8
