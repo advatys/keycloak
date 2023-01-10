@@ -1,0 +1,8 @@
+{{- if not .Values.db.externalDatabase.enabled }}
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: keycloak-{{.Values.targetClusterName }}
+spec: {{ toYaml .Values.db.cnpg | nindent 2}}
+
+{{- end }}

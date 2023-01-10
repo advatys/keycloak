@@ -1,0 +1,38 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Release.Name }}-internal
+spec:
+  secretName: {{ .Release.Name }}-tls-internal
+
+  duration: 2160h0m0s # 90d
+  renewBefore: 720h0m0s # 30d
+  # The use of the common name field has been deprecated since 2000 and is
+  # discouraged from being used.
+  commonName: {{ .Values.hostname }}
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+    - server auth
+  # Both dnsNames and ipAddresses are required
+  ipAddresses:
+    - 127.0.0.1
+  dnsNames:
+    - {{ .Values.hostname }}
+    - {{ .Release.Name }}
+    - {{ .Release.Name }}.{{ .Release.Namespace }}
+    - {{ .Release.Name }}.{{ .Release.Namespace }}.svc
+    - {{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local
+{{ $replicas := (.Values.replicas | int) }}
+{{range $i, $e := until $replicas }}
+    - {{ $.Release.Name }}-{{$i}}
+    - {{ $.Release.Name }}-{{$i}}.{{ $.Release.Namespace }}
+    - {{ $.Release.Name }}-{{$i}}.{{ $.Release.Namespace }}.svc
+    - {{ $.Release.Name }}-{{$i}}.{{ $.Release.Namespace }}.svc.cluster.local
+{{end}}
+  issuerRef:
+    name: {{ .Values.tls.certificate.issuer.name | default selfsigning }}
+    kind: {{ .Values.tls.certificate.issuer.kind }}
+    group: cert-manager.io

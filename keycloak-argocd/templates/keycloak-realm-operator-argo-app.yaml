@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak-operator
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/advatys/keycloak.git'
+    path: keycloak-realm-operator
+    targetRevision: keycloak-openshift
+    helm:
+      releaseName: keycloak-realm-operator
+      values: '#'
+  destination:
+    namespace: keycloak-operator
+    name: in-cluster
+  syncPolicy:
+    syncOptions:
+      - ApplyOutOfSyncOnly=true
+      - CreateNamespace=true

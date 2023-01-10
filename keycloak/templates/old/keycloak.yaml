@@ -1,0 +1,10 @@
+kind: Keycloak
+apiVersion: keycloak.org/v1alpha1
+metadata:
+  labels:
+    {{- include "keycloak.labels" . | nindent 4 }}
+  name: {{ .Release.Name }}
+spec:
+{{- if .Values.configuration }}
+{{ toYaml .Values.configuration | indent 2 }}
+{{- end }}

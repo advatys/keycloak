@@ -1,0 +1,33 @@
+hostname: keycloak.tld
+tls:
+  certificate:
+    issuer:
+      name: selfsigning
+      kind: ClusterIssuer
+replicas: 2
+db:
+  cnpg:
+    # If externalDatabase.enabled is set to false, a postgres database will be created using the cloudnative-pg operator. For more detailed information about the available options, please refer to https://cloudnative-pg.io/documentation/1.18/api_reference/#cluster 
+    instances: 2
+    storage:
+      size: 1Gi
+    imageName: ghcr.io/cloudnative-pg/postgresql:14.6-8
+  externalDatabase:
+    # If externalDatabase.enabled is set to true, the Chart will not create a database. You will then need to provide the connection details. 
+    enabled: false
+    config:
+      vendor: postgres
+      usernameSecret:
+        name: usernameSecret
+        key: usernameSecretKey
+      passwordSecret:
+        name: passwordSecret
+        key: passwordSecretKey
+      host: host
+      database: database
+      port: 123
+
+
+
+
+

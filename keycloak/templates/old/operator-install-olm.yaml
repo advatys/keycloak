@@ -1,0 +1,12 @@
+{{-if .Values.operator.install }}
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: {{ .Release.Name }}-operatorgroup
+  namespace: {{ .Release.Namespace }}
+spec:
+  targetNamespaces:
+    - {{ .Release.Namespace }}
+---
+
+{{- end }}

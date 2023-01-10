@@ -6,41 +6,26 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/advatys/kubernetes-library.git'
-    targetRevision: olm-helper-dev 
+    repoURL: 'https://github.com/advatys/kubernetes-operators-tools'
+    targetRevision: HEAD
     path: olm-helper
     helm:
-      parameters:
-        - name: subscription.package 
-          value: 'keycloak-operator'
-        - name: subscription.channel
-          value: 'alpha'
-        - name: catalog.name
-          value: 'operatorhubio-catalog'
-        - name: catalog.createCatalog
-          value: 'true'
       values: |
-        ---
+
         operatorGroup:
           create: true
           spec:
             targetNamespaces:
             - keycloak-operator
         catalog:
-          spec: 
-            displayName: Community Operators
-            image: quay.io/operator-framework/upstream-community-operators:latest
-            publisher: OperatorHub.io
-            sourceType: "grpc"          
+          createCatalog: false
+          createCatalogNamespace: false
+          name: community-operators
+          namespace: openshift-marketplace     
         subscription: 
-          spec:
-            config:
-              env:
-              - name: "RELATED_IMAGE_KEYCLOAK"
-                value: "quay.io/keycloak/keycloak:11.0.3"
-        
+          package: keycloak-operator
+          channel: "fast"
 
- 
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: keycloak-operator 
