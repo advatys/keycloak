@@ -1,5 +1,7 @@
 hostname: keycloak.tld
 
+replicas: 2
+
 tls:
   certificate:
     issuer:
