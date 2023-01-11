@@ -4,7 +4,7 @@ kind: KeycloakRealm
 metadata:
   name: {{ .name }}
   labels:
-    app: {{ $.Release.Name }}-sso
+    app: {{ $.Release.Name }}-{{ .name }}-sso
 spec: 
   instanceSelector:
     matchLabels:
