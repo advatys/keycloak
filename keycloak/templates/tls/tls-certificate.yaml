@@ -21,17 +21,10 @@ spec:
     - 127.0.0.1
   dnsNames:
     - {{ .Values.hostname }}
-    - {{ .Release.Name }}
-    - {{ .Release.Name }}.{{ .Release.Namespace }}
-    - {{ .Release.Name }}.{{ .Release.Namespace }}.svc
-    - {{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local
-{{ $replicas := (.Values.replicas | int) }}
-{{range $i, $e := until $replicas }}
-    - {{ $.Release.Name }}-{{$i}}
-    - {{ $.Release.Name }}-{{$i}}.{{ $.Release.Namespace }}
-    - {{ $.Release.Name }}-{{$i}}.{{ $.Release.Namespace }}.svc
-    - {{ $.Release.Name }}-{{$i}}.{{ $.Release.Namespace }}.svc.cluster.local
-{{end}}
+    - {{ .Release.Name }}-service
+    - {{ .Release.Name }}-service.{{ .Release.Namespace }}
+    - {{ .Release.Name }}-service.{{ .Release.Namespace }}.svc
+    - {{ .Release.Name }}-service.{{ .Release.Namespace }}.svc.cluster.local
   issuerRef:
     name: {{ .Values.tls.certificate.issuer.name | default "selfsigning" }}
     kind: {{ .Values.tls.certificate.issuer.kind }}
