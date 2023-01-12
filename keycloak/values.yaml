@@ -31,6 +31,27 @@ db:
       port: 123
 
 realms: []
+## example
+# realms:
+# - name: openshift
+  # spec:
+    # realm:
+      # id: "openshift"
+      # realm: "openshift"
+      # enabled: True
+      # displayName: "Openshift sso realm"
+  # clients:
+  # - name: openshift
+    # syncSecret:
+      # namespace: openshift-config
+    # spec:
+      # client:
+        # clientId: openshift
+        # publicClient: false
+        # protocol: openid-connect
+        # standardFlowEnabled: true
+        # redirectUris:
+          # - "https://oauth-openshift.apps.domain.com/oauth2callback/keycloak"
 
 
 
