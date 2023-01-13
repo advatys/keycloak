@@ -52,6 +52,16 @@ realms: []
         # standardFlowEnabled: true
         # redirectUris:
           # - "https://oauth-openshift.apps.domain.com/oauth2callback/keycloak"
-
+        # protocolMappers:
+        # - protocol: openid-connect
+          # name: group-mapper
+          # consentRequired: false
+          # protocolMapper: oidc-group-membership-mapper
+          # config:
+            # full.path: "false"
+            # userinfo.token.claim: "true"
+            # id.token.claim: "true"
+            # access.token.claim: "true"
+            # claim.name: "groups"
 
 
