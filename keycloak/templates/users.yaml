@@ -1,9 +1,9 @@
 {{- range $realm := .Values.realms }}
-{{- range $client := $realm.clients }}  
+{{- range $user := $realm.users }}  
 apiVersion: legacy.k8s.keycloak.org/v1alpha1
 kind: KeycloakClient
 metadata:
-  name: {{ $client.name }}
+  name: {{ $user.name }}
   labels:
     app: {{ $.Release.Name }}-{{ $realm.name }}-sso
 spec: 
