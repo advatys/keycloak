@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+
+resources:
+- https://raw.githubusercontent.com/keycloak/keycloak-realm-operator/1.0.0/deploy/crds/legacy.k8s.keycloak.org_externalkeycloaks_crd.yaml
+- https://raw.githubusercontent.com/keycloak/keycloak-realm-operator/1.0.0/deploy/crds/legacy.k8s.keycloak.org_keycloakclients_crd.yaml
+- https://raw.githubusercontent.com/keycloak/keycloak-realm-operator/1.0.0/deploy/crds/legacy.k8s.keycloak.org_keycloakrealms_crd.yaml
+- https://raw.githubusercontent.com/keycloak/keycloak-realm-operator/1.0.0/deploy/crds/legacy.k8s.keycloak.org_keycloakusers_crd.yaml
+- https://github.com/keycloak/keycloak-realm-operator/raw/1.0.0/deploy/operator.yaml
+- https://github.com/keycloak/keycloak-realm-operator/raw/1.0.0/deploy/role.yaml
+- https://github.com/keycloak/keycloak-realm-operator/raw/1.0.0/deploy/role_binding.yaml
+- https://github.com/keycloak/keycloak-realm-operator/raw/1.0.0/deploy/service_account.yaml
