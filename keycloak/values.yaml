@@ -63,5 +63,24 @@ realms: []
             # id.token.claim: "true"
             # access.token.claim: "true"
             # claim.name: "groups"
-
+  # users:
+  # - name: admin
+    # spec:
+      # user:
+        # credentials:
+        # - type: password
+          # value: "changeme" 
+        # email: "admin@advatys.com"
+        # firstName: "FirstName"
+        # lastName:  "LastName" 
+        # username: "admin" 
+        # enabled: True
+        # emailVerified: False
+        # realmRoles:
+        # - "offline_access"
+        # clientRoles:
+          # account:
+          # - "manage-account"
+          # realm-management:
+          # - "manage-users"
 
