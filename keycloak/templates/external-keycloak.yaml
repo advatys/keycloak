@@ -1,0 +1,10 @@
+# This is a reference for the Realm Manager Operator
+apiVersion: legacy.k8s.keycloak.org/v1alpha1
+kind: ExternalKeycloak
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Release.Name }}-sso
+spec:
+  url: https://{{ .Release.Name }}-service:8443
+  contextRoot: /

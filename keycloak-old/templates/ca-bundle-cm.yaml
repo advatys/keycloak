@@ -1,9 +1,0 @@
-{{- if .Values.keycloakCABundleEnabled }}
-apiVersion: v1
-data:
-  {{ toYaml .Values.caBundle.data | nindent 2 }}
-kind: ConfigMap
-metadata:
-  name: {{ .Values.caBundleCM | default "ca-bundle" }} 
-  namespace: openshift-config
-{{- end }}

@@ -1,0 +1,14 @@
+{{- range .Values.realms }}
+apiVersion: legacy.k8s.keycloak.org/v1alpha1
+kind: KeycloakRealm
+metadata:
+  name: {{ .name }}
+  labels:
+    app: {{ $.Release.Name }}-{{ .name }}-sso
+spec: 
+  instanceSelector:
+    matchLabels:
+      app: {{ $.Release.Name }}-sso
+{{ toYaml .spec | nindent 2 }}
+
+{{- end }}

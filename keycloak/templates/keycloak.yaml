@@ -1,0 +1,25 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  instances: {{ .Values.replicas }}
+  db:
+  {{- if .Values.db.externalDatabase.enabled }}
+{{ toYaml .Values.db.externalDatabase.config | nindent 2}}
+  {{- else }}
+    vendor: postgres
+    usernameSecret:
+      name: {{ .Release.Name }}-db-superuser
+      key: username
+    passwordSecret:
+      name: {{ .Release.Name }}-db-superuser
+      key: password
+    host: {{ .Release.Name }}-db-rw
+    database: keycloak
+    port: 5432
+  {{- end }}
+  http:
+    tlsSecret: {{ .Release.Name }}-tls-internal
+  hostname:
+    hostname: {{ .Values.hostname }}
