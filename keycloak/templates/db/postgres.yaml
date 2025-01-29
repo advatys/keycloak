@@ -1,0 +1,13 @@
+{{- if not .Values.db.externalDatabase.enabled }}
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ .Release.Name }}-db
+spec: 
+  bootstrap:
+    initdb:
+      database: keycloak
+      owner: keycloak
+{{ toYaml .Values.db.cnpg | nindent 2}}
+
+{{- end }}

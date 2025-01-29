@@ -1,0 +1,16 @@
+{{- range $realm := .Values.realms }}
+{{- range $client := $realm.clients }}  
+apiVersion: legacy.k8s.keycloak.org/v1alpha1
+kind: KeycloakClient
+metadata:
+  name: {{ $client.name }}
+  labels:
+    app: {{ $.Release.Name }}-{{ $realm.name }}-sso
+spec: 
+  realmSelector:
+    matchLabels:
+      app: {{ $.Release.Name }}-{{ $realm.name }}-sso
+{{ toYaml .spec | nindent 2 }}
+
+{{- end }}
+{{- end }}

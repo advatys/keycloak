@@ -1,0 +1,86 @@
+hostname: keycloak.tld
+
+replicas: 2
+
+tls:
+  certificate:
+    issuer:
+      name: selfsigning
+      kind: ClusterIssuer
+
+db:
+  cnpg:
+    # If externalDatabase.enabled is set to false, a postgres database will be created using the cloudnative-pg operator. For more detailed information about the available options, please refer to https://cloudnative-pg.io/documentation/1.18/api_reference/#cluster 
+    instances: 2
+    storage:
+      size: 1Gi
+    imageName: ghcr.io/cloudnative-pg/postgresql:14.6-8
+  externalDatabase:
+    # If externalDatabase.enabled is set to true, the Chart will not create a database. You will then need to provide the connection details. 
+    enabled: false
+    config:
+      vendor: postgres
+      usernameSecret:
+        name: usernameSecret
+        key: usernameSecretKey
+      passwordSecret:
+        name: passwordSecret
+        key: passwordSecretKey
+      host: host
+      database: database
+      port: 123
+
+realms: []
+## example
+# realms:
+# - name: openshift
+  # spec:
+    # realm:
+      # id: "openshift"
+      # realm: "openshift"
+      # enabled: True
+      # displayName: "Openshift sso realm"
+  # clients:
+  # - name: openshift
+    # syncSecret:
+      # namespace: openshift-config
+    # spec:
+      # client:
+        # clientId: openshift
+        # publicClient: false
+        # protocol: openid-connect
+        # standardFlowEnabled: true
+        # redirectUris:
+          # - "https://oauth-openshift.apps.domain.com/oauth2callback/keycloak"
+        # protocolMappers:
+        # - protocol: openid-connect
+          # name: group-mapper
+          # consentRequired: false
+          # protocolMapper: oidc-group-membership-mapper
+          # config:
+            # full.path: "false"
+            # userinfo.token.claim: "true"
+            # id.token.claim: "true"
+            # access.token.claim: "true"
+            # claim.name: "groups"
+  # users:
+  # - name: admin
+    # spec:
+      # user:
+        # credentials:
+        # - type: password
+          # value: "changeme" 
+        # email: "admin@advatys.com"
+        # firstName: "FirstName"
+        # lastName:  "LastName" 
+        # username: "admin" 
+        # enabled: True
+        # emailVerified: False
+        # realmRoles:
+        # - "offline_access"
+        # clientRoles:
+          # account:
+          # - "manage-account"
+          # realm-management:
+          # - "manage-users"
+
